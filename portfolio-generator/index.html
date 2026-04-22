@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PortfolioForge — Automatic Portfolio Generator</title>
+  <link rel="stylesheet" href="src/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,400&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="site-header">
+      <div class="logo">
+        <span class="logo-mark">⬡</span>
+        <span class="logo-text">PortfolioForge</span>
+      </div>
+      <nav class="steps-nav">
+        <button class="step-btn active" data-step="1">01 · Info</button>
+        <button class="step-btn" data-step="2">02 · Skills</button>
+        <button class="step-btn" data-step="3">03 · Projects</button>
+        <button class="step-btn" data-step="4">04 · Style</button>
+        <button class="step-btn" data-step="5">05 · Generate</button>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- STEP 1: Personal Info -->
+      <section class="step-section active" id="step-1">
+        <div class="step-header">
+          <p class="step-label">Step 01</p>
+          <h2>Personal Information</h2>
+          <p class="step-desc">Tell the world who you are.</p>
+        </div>
+        <div class="form-grid">
+          <div class="field full">
+            <label>Full Name *</label>
+            <input type="text" id="name" placeholder="e.g. Alex Rivera" />
+          </div>
+          <div class="field">
+            <label>Job Title *</label>
+            <input type="text" id="title" placeholder="e.g. Full-Stack Developer" />
+          </div>
+          <div class="field">
+            <label>Location</label>
+            <input type="text" id="location" placeholder="e.g. San Francisco, CA" />
+          </div>
+          <div class="field full">
+            <label>Short Bio *</label>
+            <textarea id="bio" rows="4" placeholder="Write 2–3 sentences about yourself, your passion, and what makes you unique..."></textarea>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="you@example.com" />
+          </div>
+          <div class="field">
+            <label>Phone</label>
+            <input type="tel" id="phone" placeholder="+1 555 000 0000" />
+          </div>
+          <div class="field">
+            <label>GitHub URL</label>
+            <input type="url" id="github" placeholder="https://github.com/username" />
+          </div>
+          <div class="field">
+            <label>LinkedIn URL</label>
+            <input type="url" id="linkedin" placeholder="https://linkedin.com/in/username" />
+          </div>
+          <div class="field">
+            <label>Twitter / X URL</label>
+            <input type="url" id="twitter" placeholder="https://twitter.com/username" />
+          </div>
+          <div class="field">
+            <label>Personal Website</label>
+            <input type="url" id="website" placeholder="https://yoursite.com" />
+          </div>
+          <div class="field full">
+            <label>Profile Photo URL <span class="hint">(or leave blank for initials avatar)</span></label>
+            <input type="url" id="photo" placeholder="https://example.com/photo.jpg" />
+          </div>
+        </div>
+        <div class="step-actions">
+          <button class="btn-next" onclick="goToStep(2)">Next: Skills →</button>
+        </div>
+      </section>
+
+      <!-- STEP 2: Skills -->
+      <section class="step-section" id="step-2">
+        <div class="step-header">
+          <p class="step-label">Step 02</p>
+          <h2>Skills & Expertise</h2>
+          <p class="step-desc">Add your technical and soft skills.</p>
+        </div>
+        <div class="skills-builder">
+          <div class="skill-input-row">
+            <input type="text" id="skill-name-input" placeholder="Skill name (e.g. React)" />
+            <select id="skill-category">
+              <option value="frontend">Frontend</option>
+              <option value="backend">Backend</option>
+              <option value="devops">DevOps</option>
+              <option value="design">Design</option>
+              <option value="tools">Tools</option>
+              <option value="soft">Soft Skills</option>
+              <option value="other">Other</option>
+            </select>
+            <div class="skill-level-group">
+              <label>Level</label>
+              <input type="range" id="skill-level" min="1" max="5" value="3" />
+              <span id="skill-level-display">3</span>
+            </div>
+            <button class="btn-add" onclick="addSkill()">+ Add</button>
+          </div>
+          <div class="quick-add-row">
+            <span class="hint">Quick add:</span>
+            <div id="quick-skills"></div>
+          </div>
+          <div id="skills-list" class="tags-list"></div>
+        </div>
+        <div class="step-actions">
+          <button class="btn-back" onclick="goToStep(1)">← Back</button>
+          <button class="btn-next" onclick="goToStep(3)">Next: Projects →</button>
+        </div>
+      </section>
+
+      <!-- STEP 3: Projects -->
+      <section class="step-section" id="step-3">
+        <div class="step-header">
+          <p class="step-label">Step 03</p>
+          <h2>Projects</h2>
+          <p class="step-desc">Showcase your best work.</p>
+        </div>
+        <div class="projects-builder">
+          <div class="project-form card">
+            <h3>Add a Project</h3>
+            <div class="form-grid">
+              <div class="field full">
+                <label>Project Title *</label>
+                <input type="text" id="proj-title" placeholder="e.g. AI-Powered Chat App" />
+              </div>
+              <div class="field full">
+                <label>Description *</label>
+                <textarea id="proj-desc" rows="3" placeholder="What does this project do? What problem does it solve?"></textarea>
+              </div>
+              <div class="field full">
+                <label>Tech Stack <span class="hint">(comma separated)</span></label>
+                <input type="text" id="proj-tech" placeholder="React, Node.js, MongoDB" />
+              </div>
+              <div class="field">
+                <label>Live URL</label>
+                <input type="url" id="proj-url" placeholder="https://myproject.com" />
+              </div>
+              <div class="field">
+                <label>GitHub Repo</label>
+                <input type="url" id="proj-github" placeholder="https://github.com/user/repo" />
+              </div>
+              <div class="field full">
+                <label>Image URL <span class="hint">(optional preview image)</span></label>
+                <input type="url" id="proj-img" placeholder="https://example.com/screenshot.png" />
+              </div>
+              <div class="field">
+                <label>Category</label>
+                <select id="proj-category">
+                  <option value="web">Web App</option>
+                  <option value="mobile">Mobile App</option>
+                  <option value="api">API / Backend</option>
+                  <option value="ml">ML / AI</option>
+                  <option value="design">Design</option>
+                  <option value="open-source">Open Source</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Year</label>
+                <input type="number" id="proj-year" placeholder="2024" min="2000" max="2030" />
+              </div>
+              <div class="field full featured-toggle">
+                <label class="toggle-label">
+                  <input type="checkbox" id="proj-featured" />
+                  <span class="toggle-text">Mark as Featured Project</span>
+                </label>
+              </div>
+            </div>
+            <button class="btn-add full-btn" onclick="addProject()">+ Add Project</button>
+          </div>
+          <div id="projects-list" class="projects-grid"></div>
+        </div>
+        <div class="step-actions">
+          <button class="btn-back" onclick="goToStep(2)">← Back</button>
+          <button class="btn-next" onclick="goToStep(4)">Next: Style →</button>
+        </div>
+      </section>
+
+      <!-- STEP 4: Style Customisation -->
+      <section class="step-section" id="step-4">
+        <div class="step-header">
+          <p class="step-label">Step 04</p>
+          <h2>Style & Customisation</h2>
+          <p class="step-desc">Make it yours.</p>
+        </div>
+        <div class="style-options">
+
+          <!-- Theme Selector -->
+          <div class="option-group">
+            <h3>Theme</h3>
+            <div class="theme-grid" id="theme-grid">
+              <div class="theme-card selected" data-theme="midnight" onclick="selectTheme(this)">
+                <div class="theme-preview midnight-prev"></div>
+                <span>Midnight</span>
+              </div>
+              <div class="theme-card" data-theme="arctic" onclick="selectTheme(this)">
+                <div class="theme-preview arctic-prev"></div>
+                <span>Arctic</span>
+              </div>
+              <div class="theme-card" data-theme="forest" onclick="selectTheme(this)">
+                <div class="theme-preview forest-prev"></div>
+                <span>Forest</span>
+              </div>
+              <div class="theme-card" data-theme="ember" onclick="selectTheme(this)">
+                <div class="theme-preview ember-prev"></div>
+                <span>Ember</span>
+              </div>
+              <div class="theme-card" data-theme="ocean" onclick="selectTheme(this)">
+                <div class="theme-preview ocean-prev"></div>
+                <span>Ocean</span>
+              </div>
+              <div class="theme-card" data-theme="paper" onclick="selectTheme(this)">
+                <div class="theme-preview paper-prev"></div>
+                <span>Paper</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Layout -->
+          <div class="option-group">
+            <h3>Layout</h3>
+            <div class="layout-grid">
+              <div class="layout-card selected" data-layout="hero" onclick="selectLayout(this)">
+                <div class="layout-icon">▬<br>▬ ▬<br>▬ ▬ ▬</div>
+                <span>Hero</span>
+              </div>
+              <div class="layout-card" data-layout="sidebar" onclick="selectLayout(this)">
+                <div class="layout-icon">▐ ▬<br>▐ ▬<br>▐ ▬</div>
+                <span>Sidebar</span>
+              </div>
+              <div class="layout-card" data-layout="minimal" onclick="selectLayout(this)">
+                <div class="layout-icon">· · ·<br>▬<br>▬ ▬</div>
+                <span>Minimal</span>
+              </div>
+              <div class="layout-card" data-layout="magazine" onclick="selectLayout(this)">
+                <div class="layout-icon">▬ ▬<br>▬ · ▬<br>▬ ▬</div>
+                <span>Magazine</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Font -->
+          <div class="option-group">
+            <h3>Typography</h3>
+            <div class="font-options">
+              <label class="font-option selected" data-font="syne">
+                <input type="radio" name="font" value="syne" checked />
+                <span class="font-sample" style="font-family:'Syne',sans-serif">Syne — Modern</span>
+              </label>
+              <label class="font-option" data-font="fraunces">
+                <input type="radio" name="font" value="fraunces" />
+                <span class="font-sample" style="font-family:'Fraunces',serif">Fraunces — Editorial</span>
+              </label>
+              <label class="font-option" data-font="mono">
+                <input type="radio" name="font" value="mono" />
+                <span class="font-sample" style="font-family:'DM Mono',monospace">DM Mono — Technical</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Custom Accent Color -->
+          <div class="option-group">
+            <h3>Accent Color</h3>
+            <div class="accent-row">
+              <input type="color" id="accent-color" value="#7c3aed" />
+              <span id="accent-hex">#7c3aed</span>
+              <div class="preset-accents">
+                <button class="accent-preset" style="background:#7c3aed" onclick="setAccent('#7c3aed')"></button>
+                <button class="accent-preset" style="background:#059669" onclick="setAccent('#059669')"></button>
+                <button class="accent-preset" style="background:#dc2626" onclick="setAccent('#dc2626')"></button>
+                <button class="accent-preset" style="background:#d97706" onclick="setAccent('#d97706')"></button>
+                <button class="accent-preset" style="background:#0284c7" onclick="setAccent('#0284c7')"></button>
+                <button class="accent-preset" style="background:#db2777" onclick="setAccent('#db2777')"></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sections Toggle -->
+          <div class="option-group">
+            <h3>Sections to Include</h3>
+            <div class="sections-toggle">
+              <label class="toggle-label"><input type="checkbox" class="section-toggle" value="hero" checked /> Hero / Intro</label>
+              <label class="toggle-label"><input type="checkbox" class="section-toggle" value="about" checked /> About Me</label>
+              <label class="toggle-label"><input type="checkbox" class="section-toggle" value="skills" checked /> Skills</label>
+              <label class="toggle-label"><input type="checkbox" class="section-toggle" value="projects" checked /> Projects</label>
+              <label class="toggle-label"><input type="checkbox" class="section-toggle" value="contact" checked /> Contact</label>
+              <label class="toggle-label"><input type="checkbox" class="section-toggle" value="resume" /> Resume Download Button</label>
+            </div>
+          </div>
+
+          <!-- Animations -->
+          <div class="option-group">
+            <h3>Animations</h3>
+            <div class="sections-toggle">
+              <label class="toggle-label"><input type="checkbox" id="anim-fade" checked /> Fade-in on scroll</label>
+              <label class="toggle-label"><input type="checkbox" id="anim-typing" checked /> Typing effect in hero</label>
+              <label class="toggle-label"><input type="checkbox" id="anim-hover" checked /> Card hover effects</label>
+              <label class="toggle-label"><input type="checkbox" id="anim-cursor" /> Custom cursor</label>
+            </div>
+          </div>
+        </div>
+        <div class="step-actions">
+          <button class="btn-back" onclick="goToStep(3)">← Back</button>
+          <button class="btn-next" onclick="goToStep(5)">Next: Generate →</button>
+        </div>
+      </section>
+
+      <!-- STEP 5: Generate -->
+      <section class="step-section" id="step-5">
+        <div class="step-header">
+          <p class="step-label">Step 05</p>
+          <h2>Generate Your Portfolio</h2>
+          <p class="step-desc">Review your choices and download.</p>
+        </div>
+        <div class="summary-grid" id="summary"></div>
+        <div class="generate-actions">
+          <button class="btn-preview" onclick="openPreview()">👁 Live Preview</button>
+          <button class="btn-generate" onclick="generatePortfolio()">
+            <span class="btn-icon">⬇</span> Download Portfolio ZIP
+          </button>
+        </div>
+        <div id="generate-status" class="generate-status"></div>
+        <div class="step-actions">
+          <button class="btn-back" onclick="goToStep(4)">← Back</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Live Preview Modal -->
+    <div id="preview-modal" class="modal-overlay hidden">
+      <div class="modal-window">
+        <div class="modal-header">
+          <span>Live Preview</span>
+          <button onclick="closePreview()" class="modal-close">✕</button>
+        </div>
+        <iframe id="preview-frame" class="preview-frame"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script src="src/data.js"></script>
+  <script src="src/generator.js"></script>
+  <script src="src/themes.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
